@@ -16,6 +16,7 @@ const data = require('./data');
 const {
   animals,
   employees,
+  prices,
 } = data;
 
 const animalsByIds = (...ids) => {
@@ -82,9 +83,26 @@ const animalCount = (species) => {
   }, {});
 };
 
-// function entryCalculator(entrants) {
-//   // seu código aqui
-// }
+// https://medium.com/cleytonbrasil/javascript-como-saber-se-um-objeto-est%C3%A1-vazio-a6a153f4f81f
+const entryCalculator = (entrants) => {
+  const {
+    Adult: ad,
+    Child: ch,
+    Senior: se,
+  } = prices;
+  if (!entrants) {
+    return 0;
+  }
+  const objectVoid = Object.entries(entrants).length;
+  if (!objectVoid) {
+    return 0;
+  }
+  const {
+    Adult = 0, Child = 0, Senior = 0,
+  } = entrants;
+  const totalTicket = ad * Adult + ch * Child + se * Senior;
+  return totalTicket;
+};
 
 // function animalMap(options) {
 //   // seu código aqui
@@ -107,7 +125,7 @@ const animalCount = (species) => {
 // }
 
 module.exports = {
-  // entryCalculator,
+  entryCalculator,
   // schedule,
   animalCount,
   // animalMap,
