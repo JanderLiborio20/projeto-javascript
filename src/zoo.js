@@ -148,6 +148,7 @@ const oldestFromFirstSpecies = (id) => {
   return [find.name, find.sex, find.age];
 };
 
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil
 const increasePrices = (percentage) => {
   const ageRange = Object.keys(prices);
   ageRange.forEach((range) => {
@@ -156,9 +157,32 @@ const increasePrices = (percentage) => {
   return prices;
 };
 
-// function employeeCoverage(idOrName) {
-//   // seu código aqui
-// }
+// funçao para nao ficar grander a funaçao employeeByName
+const encontrarLista = () => employees.reduce((acc, {
+  firstName,
+  lastName,
+  responsibleFor,
+}) => {
+  acc[`${firstName} ${lastName}`] = responsibleFor.map((animal) =>
+    animalsByIds(animal)[0].name);
+  return acc;
+}, {});
+
+const employeeCoverage = (idOrName) => {
+  if (!idOrName) {
+    return encontrarLista();
+  }
+  const pessoaCuidadora = employees.find(({
+    firstName,
+    lastName,
+    id,
+  }) => (firstName === idOrName || lastName === idOrName || id === idOrName));
+  const name = pessoaCuidadora.responsibleFor.map((animal) => animalsByIds(animal)[0].name);
+  const objeto = {
+    [`${pessoaCuidadora.firstName} ${pessoaCuidadora.lastName}`]: name,
+  };
+  return objeto;
+};
 
 module.exports = {
   entryCalculator,
@@ -167,7 +191,7 @@ module.exports = {
   // animalMap,
   animalsByIds,
   employeeByName,
-  // employeeCoverage,
+  employeeCoverage,
   addEmployee,
   isManager,
   animalsOlderThan,
