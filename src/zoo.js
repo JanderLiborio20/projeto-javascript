@@ -17,6 +17,7 @@ const {
   animals,
   employees,
   prices,
+  hours,
 } = data;
 
 const animalsByIds = (...ids) => {
@@ -104,13 +105,29 @@ const entryCalculator = (entrants) => {
   return totalTicket;
 };
 
-// function animalMap(options) {
+// const animalMap = (options) => {
 //   // seu código aqui
-// }
+// };
 
-// function schedule(dayName) {
-//   // seu código aqui
-// }
+// https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+const schedule = (dayName) => {
+  const key = {};
+  if (dayName === 'Monday') {
+    key.Monday = 'CLOSED';
+    return key;
+  }
+  const days = Object.keys(hours);
+  if (!dayName) {
+    return days.reduce((acc, day) => {
+      acc[day] = `Open from ${hours[day].open}am until ${hours[day].close - 12}pm`;
+      if (day === 'Monday') acc[day] = 'CLOSED';
+      return acc;
+    }, {});
+  }
+  const searchDay = days.find((search) => search === dayName);
+  key[dayName] = `Open from ${hours[searchDay].open}am until ${hours[searchDay].close - 12}pm`;
+  return key;
+};
 
 // function oldestFromFirstSpecies(id) {
 //   // seu código aqui
@@ -126,7 +143,7 @@ const entryCalculator = (entrants) => {
 
 module.exports = {
   entryCalculator,
-  // schedule,
+  schedule,
   animalCount,
   // animalMap,
   animalsByIds,
