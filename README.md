@@ -22,5 +22,5 @@ git clone git@github.com:JanderLiborio20/projeto-javascript.git
 Em seguida, acesse a pasta:
 
 ```
-cd sd-010-b-project-zoo-functions
+cd projeto-javacript
 ```
